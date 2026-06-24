@@ -2,6 +2,8 @@
 
 A minimal, fast personal website template built with [Eleventy](https://www.11ty.dev/) and deployed free to GitHub Pages. Sections for **about, experiences, projects, awards, people, photography, and quotes** — edit Markdown and JSON, push, done.
 
+**[See the live example →](https://alexploopy.github.io/portfolio/)**
+
 Features: build-time responsive images (drop any image, it's optimized automatically), scroll-to-navigate between pages, a scraper-resistant email link, and zero client-side framework.
 
 ## Quick start
