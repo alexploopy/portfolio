@@ -1,0 +1,56 @@
+---
+layout: base.njk
+active: awards
+title: Awards
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  This list is driven by content/awards/list.json (the global `awards`), an
+  ordered array. JSON can't hold comments, so the reference shape lives here
+  (it never renders). Reorder awards by moving entries in the array.
+
+  Two entry shapes:
+    Simple (default) — one line, no detail page, no extra files:
+        { "title": "Award Name", "description": "One-line summary." }
+      `description` is optional and supports inline Markdown links.
+
+    Detailed — references a Markdown file in content/awards/ that holds the
+    title, description, and a body, and gets its own detail page:
+        { "ref": "vex-skills-world-champions" }   // -> content/awards/vex-skills-world-champions.md
+      The .md uses the same front matter as experiences/projects (title, date,
+      description, optional website/location) plus a Markdown body. Its title
+      links to /awards/<slug>/. The array only positions it in the list.
+
+  Reference shapes:
+
+      [
+        { "title": "Hackathon Winner", "description": "First place." },
+        { "ref": "vex-skills-world-champions" }
+      ]
+  ───────────────────────────────────────────────────────────────────────────
+#}
+<h1 class="page-title">Awards</h1>
+<ul class="entry-list">
+  {% for a in awards %}
+  {%- if a.ref -%}
+  {# Detailed award: pull title/description from its .md collection item. #}
+  {%- set item = collections.awards | findBySlug(a.ref) -%}
+  {%- if item -%}
+  <li class="entry-row">
+    <div class="entry-head">
+      <a class="entry-title" href="{{ item.url | url }}">{{ item.data.title }}</a>
+    </div>
+    {% if item.data.description %}<p class="entry-desc">{{ item.data.description | mdInline | safe }}</p>{% endif %}
+  </li>
+  {%- endif -%}
+  {%- else -%}
+  {# Simple award: title (optionally an external link) + description. #}
+  <li class="entry-row">
+    <div class="entry-head">
+      {% if a.website %}<a class="entry-title entry-title--ext" href="{{ a.website }}" target="_blank" rel="noopener noreferrer">{{ a.title }}</a>{% else %}<span class="entry-title">{{ a.title }}</span>{% endif %}
+    </div>
+    {% if a.description %}<p class="entry-desc">{{ a.description | mdInline | safe }}</p>{% endif %}
+  </li>
+  {%- endif -%}
+  {% endfor %}
+</ul>

@@ -1,0 +1,8 @@
+[
+  { "text": "The quote itself goes here.", "attribution": "Author Name" },
+  { "text": "Another short, memorable line.", "attribution": "Someone Else" },
+  {
+    "text": "A quote with a linked attribution.",
+    "attribution": "Your Name via [X](https://x.com/yourhandle)"
+  }
+]

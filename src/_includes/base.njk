@@ -1,0 +1,85 @@
+{%- set scrollNav = page.url | scrollNav(collections, active, site.nav, projectOrder) -%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {# Browser-tab title is always the site owner's name — it never changes per
+       page (visible page headings still use each page's own `title`). #}
+    <title>{{ site.name }}</title>
+    <link rel="icon" href="{{ '/img/favicon.svg' | url }}" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ '/css/style.css' | url }}" />
+
+    {# Preload every other page's HTML so scroll/link navigation is instant (the
+       destination is already cached). rel=prefetch is broadly supported; the
+       speculation rules let Chromium prefetch eagerly too. #}
+    {% for p in collections.all %}{% if p.url and p.url != page.url %}<link rel="prefetch" href="{{ p.url | url }}" />
+    {% endif %}{% endfor %}
+    {# Image preloading is intentionally omitted: the eleventyImageTransformPlugin
+       rewrites <img> to hashed <picture> variants whose URLs aren't known at
+       template render time, so preloading the original paths would just fetch
+       files the page never displays. Adjacent pages are prerendered via the
+       speculation rules below, which fetches their (variant) images in context. #}
+    <script type="speculationrules">
+      {
+        "prerender": [
+          { "source": "list", "eagerness": "eager", "urls": [{% if scrollNav.next %}"{{ scrollNav.next | url }}"{% endif %}{% if scrollNav.next and scrollNav.prev %}, {% endif %}{% if scrollNav.prev %}"{{ scrollNav.prev | url }}"{% endif %}] }
+        ],
+        "prefetch": [
+          { "source": "document", "where": { "href_matches": "{{ '/' | url }}*" }, "eagerness": "eager" }
+        ]
+      }
+    </script>
+  </head>
+  <body
+    data-scroll-next="{{ scrollNav.next | url if scrollNav.next else '' }}"
+    data-scroll-prev="{{ scrollNav.prev | url if scrollNav.prev else '' }}"
+  >
+    <div class="layout">
+      <nav class="sidebar">
+        <ul>
+          {% for item in site.nav %}
+          <li>
+            <a
+              href="{{ item.url | url }}"
+              class="nav-link{{ ' active' if item.key == active }}"
+              >{{ item.label }}</a
+            >
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      <main class="content">{{ content | safe }}</main>
+    </div>
+    {% if scrollNav.next %}
+    <a
+      class="scroll-indicator"
+      href="{{ scrollNav.next | url }}"
+      aria-label="Next page"
+    >
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </a>
+    {% endif %}
+    <script src="{{ '/js/lethargy.js' | url }}" defer></script>
+    <script src="{{ '/js/scroll-nav.js' | url }}" defer></script>
+    <script src="{{ '/js/email.js' | url }}" defer></script>
+  </body>
+</html>

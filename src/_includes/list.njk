@@ -1,0 +1,45 @@
+---
+layout: base.njk
+---
+{% from "project-links.njk" import projectLinks %}
+{% macro entryTitle(item) -%}
+  {%- set logo %}{% if item.data.logo %}<img class="entry-logo" src="{{ item.data.logo }}" alt="" />{% endif %}{% endset -%}
+  {%- if item.url -%}
+  <a class="entry-title" href="{{ item.url | url }}">{{ logo | safe }}{{ item.data.title }}</a>
+  {%- elif item.data.website -%}
+  <a class="entry-title entry-title--ext" href="{{ item.data.website }}" target="_blank" rel="noopener noreferrer">{{ logo | safe }}{{ item.data.title }}</a>
+  {%- else -%}
+  <span class="entry-title">{{ logo | safe }}{{ item.data.title }}</span>
+  {%- endif -%}
+{%- endmacro %}
+<h1 class="page-title">{{ title }}</h1>
+<ul class="entry-list">
+  {% for item in collections[collection] | order(collection, projectOrder) %}
+  <li class="entry-row">
+    {% if collection == "experiences" %}
+    {# Experience layout: company / dates (top), role / location (bottom). #}
+    <div class="entry-grid">
+      <div class="entry-company">{{ entryTitle(item) }}</div>
+      <div class="entry-dates">{% if item.data.dates %}{{ item.data.dates }}{% endif %}</div>
+      <div class="entry-role">{% if item.data.role %}{{ item.data.role | mdInline | safe }}{% endif %}</div>
+      <div class="entry-loc">{% if item.data.location %}{{ item.data.location | mdInline | safe }}{% endif %}</div>
+    </div>
+    {% else %}
+    <div class="entry-head">
+      {{ entryTitle(item) }}
+      {% if collection == "projects" %}
+      {{ projectLinks(item.data.links) }}
+      {% else %}
+      <span class="entry-meta">
+        {% if item.data.location %}<span class="entry-location">{{ item.data.location | mdInline | safe }}</span>{% endif %}
+        <span class="entry-date">{{ item.date | readableDate }}</span>
+      </span>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if item.data.description %}
+    <p class="entry-desc">{{ item.data.description | mdInline | safe }}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

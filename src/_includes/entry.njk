@@ -1,0 +1,38 @@
+---
+layout: base.njk
+---
+{% from "project-links.njk" import projectLinks %}
+{# Logo (if any) + title. When `website` is set, the title text links off-site;
+   the logo stays outside the link. #}
+{% macro linkedTitle(logo, title, website) -%}
+  {%- if logo %}<img class="entry-logo" src="{{ logo }}" alt="" />{% endif -%}
+  {%- if website -%}
+  <a class="entry-company-link" href="{{ website }}" target="_blank" rel="noopener noreferrer">{{ title }}</a>
+  {%- else -%}
+  {{ title }}
+  {%- endif -%}
+{%- endmacro %}
+<article class="entry">
+  <header class="entry-detail-head">
+    {% if active == "experiences" %}
+    {# Experience layout: company / dates (top), role / location (bottom). #}
+    <div class="entry-grid">
+      <h1 class="page-title entry-company">{{ linkedTitle(logo, title, website) }}</h1>
+      <div class="entry-dates">{% if dates %}{{ dates }}{% endif %}</div>
+      <div class="entry-role">{% if role %}{{ role | mdInline | safe }}{% endif %}</div>
+      <div class="entry-loc">{% if location %}{{ location | mdInline | safe }}{% endif %}</div>
+    </div>
+    {% else %}
+    <h1 class="page-title">{{ linkedTitle(logo, title, website) }}</h1>
+    {% if active == "projects" %}
+    {{ projectLinks(links) }}
+    {% else %}
+    <span class="entry-meta">
+      {% if location %}<span class="entry-location">{{ location | mdInline | safe }}</span>{% endif %}
+      <span class="entry-date">{{ page.date | readableDate }}</span>
+    </span>
+    {% endif %}
+    {% endif %}
+  </header>
+  <div class="prose">{{ content | safe }}</div>
+</article>

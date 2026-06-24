@@ -1,0 +1,15 @@
+[
+  { "name": "Ada Lovelace", "url": "https://en.wikipedia.org/wiki/Ada_Lovelace" },
+  {
+    "name": "Alan Turing",
+    "aka": "Turing",
+    "url": "https://en.wikipedia.org/wiki/Alan_Turing"
+  },
+  {
+    "name": "Grace Hopper",
+    "url": "https://en.wikipedia.org/wiki/Grace_Hopper",
+    "links": [
+      { "label": "wikipedia", "url": "https://en.wikipedia.org/wiki/Grace_Hopper" }
+    ]
+  }
+]

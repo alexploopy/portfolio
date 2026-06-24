@@ -1,0 +1,35 @@
+---
+layout: base.njk
+active: quotes
+title: Quotes
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  This list is driven by content/quotes/quotes.json. JSON can't hold comments,
+  so the reference shape lives here (it never renders).
+
+  Fields per entry:
+    Required:  text         — the quote body
+               attribution  — rendered as "— attribution"
+
+  Both fields support inline Markdown, so links work:
+    "Your Name via [X](https://x.com/yourhandle)"
+
+  Reference shape:
+
+      [
+        {
+          "text": "The quote itself.",
+          "attribution": "Author"
+        }
+      ]
+  ───────────────────────────────────────────────────────────────────────────
+#}
+<div class="quotes">
+  {% for q in quotes %}
+  <blockquote class="quote">
+    <p>{{ q.text | mdInline | safe }}</p>
+    <cite>— {{ q.attribution | mdInline | safe }}</cite>
+  </blockquote>
+  {% endfor %}
+</div>

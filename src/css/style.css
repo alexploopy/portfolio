@@ -1,0 +1,533 @@
+:root {
+  --bg: #faf9f6;
+  --text: #1a1a1a;
+  --muted: #a3a3a3;
+  --rule: #e5e3dd;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --content-width: 620px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ---- Layout: sidebar + content ---- */
+.layout {
+  display: flex;
+  gap: 2.5rem;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem 4rem;
+  animation: fade-in 0.75s ease both;
+}
+
+.sidebar {
+  flex: 0 0 110px;
+  border-right: 1px solid var(--rule);
+  padding-right: 1.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.sidebar li {
+  margin: 0;
+}
+
+.nav-link {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text);
+}
+
+.nav-link.active {
+  color: var(--text);
+}
+
+.content {
+  flex: 1 1 auto;
+  max-width: var(--content-width);
+  min-width: 0;
+  animation: fade-up 0.75s ease both;
+}
+
+/* ---- Typography ---- */
+.page-title {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+
+.prose p {
+  text-align: justify;
+  hyphens: auto;
+  margin: 0 0 1.1rem;
+}
+
+a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0 1.25rem;
+}
+
+.social a {
+  font-size: 0.9rem;
+}
+
+/* Email shown verbatim (e.g. you[dot]name[at]example[dot]com) as plain text to
+   deter scrapers — intentionally not a mailto link. */
+/* "Email" label — looks like the other contact links; email.js makes it open a
+   mailto on click (the real address is never in the source). */
+.social .email {
+  font-size: 0.9rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.social .email.is-clickable {
+  cursor: pointer;
+}
+
+/* ---- Shared list (experiences / projects / awards) ---- */
+.entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry-row {
+  margin: 0 0 0.75rem;
+}
+
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.entry-title {
+  color: var(--text);
+}
+
+/* Linked entries (experiences / projects) carry a persistent "→" so it's clear
+   they open a detail page; awards (rendered as plain text, not links) don't. */
+a.entry-title {
+  text-decoration: none;
+}
+
+a.entry-title::after {
+  content: "\2192"; /* → */
+  color: var(--muted);
+  margin-left: 0.4em;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+a.entry-title:hover {
+  text-decoration: underline;
+}
+
+a.entry-title:hover::after {
+  color: var(--text);
+  transform: translateX(3px);
+  text-decoration: none;
+}
+
+/* External title link (e.g. an award pointing off-site): "↗" not the in-site
+   "→", and a diagonal nudge on hover. */
+a.entry-title--ext::after {
+  content: "\2197"; /* ↗ */
+}
+
+a.entry-title--ext:hover::after {
+  transform: translate(2px, -2px);
+}
+
+/* Right-side meta: optional location stacked above the date (right-aligned). */
+.entry-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  flex: none;
+}
+
+.entry-location {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.entry-date {
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.entry-desc {
+  color: var(--muted);
+  margin: 0.15rem 0 0;
+  font-size: 0.92rem;
+}
+
+/* Experience layout: company / dates (top row), role / location (bottom row). */
+.entry-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
+  row-gap: 0.15rem;
+  width: 100%;
+  align-items: baseline;
+  line-height: 1.3;
+}
+
+.entry-company {
+  grid-column: 1;
+}
+
+.entry-dates {
+  grid-column: 2;
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.entry-role {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.entry-loc {
+  grid-column: 2;
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---- Detail page (experiences / projects) ---- */
+.entry-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.entry-detail-head .page-title {
+  margin: 0;
+}
+
+/* Company name links off-site on detail pages. Mirrors the list-link pattern
+   (a.entry-title) but uses a persistent "↗" to signal an external destination,
+   distinct from the in-site "→". Heading color at rest; link cue on hover. */
+a.entry-company-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.entry-company-link::after {
+  content: "\2197"; /* ↗ */
+  color: var(--muted);
+  margin-left: 0.3em;
+  font-size: 0.7em;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+a.entry-company-link:hover {
+  text-decoration: underline;
+}
+
+a.entry-company-link:hover::after {
+  color: var(--text);
+  transform: translate(2px, -2px);
+  text-decoration: none;
+}
+
+/* ---- Project links (GitHub / Devpost / live site / …) ----
+   A wrapping row of labeled external links, each with the same persistent "↗"
+   external cue as the company link. Used on the projects list and detail. */
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.1rem 1rem;
+  /* Sits inline on the right of the title row (like the experience date), muted
+     + smaller, so it clearly reads as that project's links — not a new entry. */
+  margin: 0;
+}
+
+.project-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.project-link::after {
+  content: "\2197"; /* ↗ */
+  color: var(--muted);
+  margin-left: 0.15em;
+  font-size: 0.7em;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.project-link:hover,
+.project-link:hover::after {
+  color: var(--text);
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.project-link:hover::after {
+  transform: translate(2px, -2px);
+  text-decoration: none;
+}
+
+/* ---- Blockquotes (detail bodies + quotes page) ---- */
+blockquote {
+  border-left: 2px solid var(--rule);
+  margin: 1.75rem 0;
+  padding: 0.1rem 0 0.1rem 1.25rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.55;
+}
+
+blockquote p {
+  margin: 0 0 0.5rem;
+  text-align: left;
+}
+
+blockquote cite {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---- People page ---- */
+.people-list {
+  margin: 1.25rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.people-list li {
+  margin: 0 0 0.35rem;
+}
+
+/* Optional nickname after a person's name — muted and small, an unobtrusive aside. */
+.people-aka {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---- Quotes page ---- */
+.quotes blockquote {
+  margin: 1.5rem 0;
+}
+
+/* ---- Responsive: stack on mobile ---- */
+@media (max-width: 640px) {
+  .layout {
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2.5rem 1.25rem 3rem;
+  }
+
+  .sidebar {
+    flex: none;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0 0 1rem;
+  }
+
+  .sidebar ul {
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+  }
+
+  .sidebar li {
+    margin: 0;
+  }
+
+  .content {
+    max-width: none;
+  }
+
+  .prose p {
+    text-align: left;
+    hyphens: manual;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layout,
+  .content {
+    animation: none;
+  }
+}
+
+/* ---- Scroll-to-next indicator ---- */
+.scroll-indicator {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  color: var(--muted);
+  text-decoration: none;
+  line-height: 0;
+  animation: chevron-bounce 1.8s ease-in-out infinite;
+  transition: color 0.2s ease, opacity 0.3s ease;
+  z-index: 10;
+}
+
+.scroll-indicator:hover {
+  color: var(--text);
+}
+
+/* Hidden until the bottom of the page is in view (toggled by scroll-nav.js). */
+.scroll-indicator.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes chevron-bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(5px);
+  }
+}
+
+/* Cross-document crossfade where supported. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator {
+    animation: none;
+  }
+}
+
+/* ---- Photography (masonry via CSS multi-column) ---- */
+/* Auto-arranges any number of differently sized photos into balanced columns,
+   each photo keeping its natural aspect ratio (no cropping). The column count
+   adapts to the available width. */
+.photo-grid {
+  column-width: 220px;
+  column-gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 0.5rem;
+  break-inside: avoid; /* keep a photo from splitting across columns */
+}
+
+/* ---- Inline images in prose ---- */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.figure {
+  margin: 1.75rem 0;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure figcaption {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+}
+
+/* ---- Inline entry logo (experiences / projects) ---- */
+.entry-logo {
+  height: 1.4em;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  border-radius: 3px;
+}
+
+/* ---- Home title logo (left of the name) ---- */
+.title-logo {
+  height: 1.6em;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}

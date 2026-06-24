@@ -1,0 +1,58 @@
+---
+layout: list.njk
+active: experiences
+title: Experiences
+collection: experiences
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  Experiences are Markdown files in content/experiences/ — this page only
+  lists them. To add one, create e.g. content/experiences/my-experience.md.
+
+  Front-matter fields:
+    Required:  title        — heading + list-link text
+               date         — YYYY-MM-DD; the list sorts newest-first
+    Optional:  description  — one-line summary under the title in the list;
+                              supports inline Markdown links, e.g. [text](url)
+
+  The text meta fields (role, location) also accept inline Markdown links. A
+  value that *starts* with "[" must be quoted so YAML doesn't read it as a list,
+  e.g.  location: "[Your City](https://example.com)".
+
+  Body features (all optional Markdown):
+    • Paragraphs            — render as justified prose on the detail page
+    • Inline links          — [text](https://example.com), underlined-redirect style
+    • Blockquote pull-quote — > line, with an optional <cite>— Attribution</cite>;
+                              the attribution can hold a link, e.g.
+                              > <cite>— [Author](https://example.com)</cite>
+    • Standalone image      — alone in its own paragraph; becomes a <figure>, and
+                              an image "title" in quotes becomes its <figcaption>.
+                              The caption supports inline Markdown, so links work:
+                              "Caption with a [link](https://example.com)" — use
+                              Markdown link syntax, not raw <a> (quotes break it)
+    • Inline image          — inside a sentence; stays a plain <img>, no figure
+
+  Each .md file automatically gets its own detail page and joins the
+  scroll-through navigation for this section (newest-first).
+
+  Reference entry (it never renders here; copy it into a new .md file):
+
+      ---
+      title: Example Company
+      date: 2021-11-21
+      description: A one-line summary.
+      ---
+
+      A normal paragraph of body copy (Markdown).
+
+      A paragraph with an inline [link](https://example.com).
+
+      > A blockquote becomes a styled pull-quote.
+      >
+      > <cite>— William Faulkner</cite>
+
+      ![alt text](/img/experiences/example-company/photo-1.webp "Optional caption")
+
+      Here is an inline image ![alt](/img/experiences/example-company/photo-2.webp) in a sentence.
+  ───────────────────────────────────────────────────────────────────────────
+#}

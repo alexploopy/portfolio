@@ -1,0 +1,33 @@
+---
+layout: base.njk
+active: photography
+title: Photography
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  The grid is driven by content/photography/photography.json. JSON can't hold
+  comments, so the reference shape lives here (it never renders). Drop image
+  files into content/img/photography/, then list each one.
+
+  Fields per entry:
+    Required:  src  — image URL; served from /img/photography/
+               alt  — alt text for accessibility
+
+  Any image size works — the grid arranges them automatically; images load lazily.
+
+  Reference shape:
+
+      [
+        {
+          "src": "/img/photography/my-photo.webp",
+          "alt": "Description of the photo"
+        }
+      ]
+  ───────────────────────────────────────────────────────────────────────────
+#}
+<h1 class="page-title">Photography</h1>
+<div class="photo-grid">
+  {% for p in photography %}
+  <img class="photo" src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" />
+  {% endfor %}
+</div>

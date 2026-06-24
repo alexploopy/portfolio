@@ -1,0 +1,11 @@
+{# Row of external project links (GitHub / Devpost / live site / etc.), each an
+   underlined text link with a muted ↗ (added in CSS, matching the experience
+   external-link affordance). Data shape: a `links` list of { label, url } in
+   the project front matter. Renders nothing when there are no links. #}
+{% macro projectLinks(links) -%}
+{%- if links and links.length -%}
+<p class="project-links">
+  {%- for l in links %}<a class="project-link" href="{{ l.url }}" target="_blank" rel="noopener noreferrer">{{ l.label }}</a>{% endfor -%}
+</p>
+{%- endif -%}
+{%- endmacro %}

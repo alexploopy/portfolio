@@ -1,0 +1,6 @@
+[
+  { "title": "Example Award" },
+  { "title": "Another Award", "description": "A one-line description, with an optional [link](https://example.com)." },
+  { "title": "A Third Award", "description": "Awards are simple one-liners by default." },
+  { "ref": "featured-award" }
+]

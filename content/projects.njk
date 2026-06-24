@@ -1,0 +1,71 @@
+---
+layout: list.njk
+active: projects
+title: Projects
+collection: projects
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  Projects are Markdown files in content/projects/ — this page only lists
+  them. To add one, create e.g. content/projects/my-project.md.
+
+  Project order is set in content/projects/order.json — an array of project
+  filenames (without ".md") listed top-to-bottom. Anything not listed falls to
+  the end (alphabetically by title). Projects have no date.
+
+  Front-matter fields:
+    Required:  title        — heading + list-link text
+    Optional:  description  — one-line summary under the title in the list;
+                              supports inline Markdown links, e.g. [text](url)
+               logo         — small icon shown inline before the title
+               website      — the project's default/primary link (like an
+                              experience's). The list title opens the detail
+                              page (→); on the detail page the title links here
+                              (↗). Use this for the one main link.
+               links        — additional external links (GitHub / Devpost / live
+                              site / …), each { label, url }; shown as a row of
+                              "label ↗" links on both the list and detail page
+
+  Body features (all optional Markdown):
+    • Paragraphs            — render as justified prose on the detail page
+    • Inline links          — [text](https://example.com), underlined-redirect style
+    • Blockquote pull-quote — > line, with an optional <cite>— Attribution</cite>;
+                              the attribution can hold a link, e.g.
+                              > <cite>— [Author](https://example.com)</cite>
+    • Standalone image      — alone in its own paragraph; becomes a <figure>, and
+                              an image "title" in quotes becomes its <figcaption>.
+                              The caption supports inline Markdown, so links work:
+                              "Caption with a [link](https://example.com)" — use
+                              Markdown link syntax, not raw <a> (quotes break it)
+    • Inline image          — inside a sentence; stays a plain <img>, no figure
+
+  Each .md file automatically gets its own detail page and joins the
+  scroll-through navigation for this section (in projectOrder.json order).
+
+  Reference entry (it never renders here; copy it into a new .md file):
+
+      ---
+      title: Project One
+      description: A one-line summary of the project.
+      links:
+        - label: GitHub
+          url: https://github.com/yourhandle/project-one
+        - label: Devpost
+          url: https://devpost.com/software/project-one
+        - label: Live
+          url: https://example.com
+      ---
+
+      A normal paragraph of body copy (Markdown).
+
+      A paragraph with an inline [link](https://example.com).
+
+      > A blockquote becomes a styled pull-quote.
+      >
+      > <cite>— Some Author</cite>
+
+      ![alt text](/img/projects/project-one/photo-1.webp "Optional caption")
+
+      Here is an inline image ![alt](/img/projects/project-one/photo-2.webp) in a sentence.
+  ───────────────────────────────────────────────────────────────────────────
+#}

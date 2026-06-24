@@ -1,0 +1,45 @@
+---
+layout: base.njk
+active: people
+title: People
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  This list is driven by content/people/people.json. JSON can't hold comments,
+  so the reference shape lives here (it never renders).
+
+  Fields per entry:
+    Required:  name   — display text
+    Optional:  aka    — nickname; rendered muted as "aka <value>" after the name
+               url    — link target; use "" or omit for no link
+               links  — array of extra labelled links, each { label, url },
+                        rendered as "(label)" after the name
+
+  Reference shape:
+
+      [
+        {
+          "name": "Carl Sagan",
+          "aka": "Sagan",
+          "url": "https://en.wikipedia.org/wiki/Carl_Sagan",
+          "links": [
+            { "label": "twitter", "url": "https://twitter.com/..." }
+          ]
+        }
+      ]
+  ───────────────────────────────────────────────────────────────────────────
+#}
+<h1 class="page-title">People</h1>
+<div class="prose">
+  <p>
+    This list is a collection of the awesome people who have influenced me.
+  </p>
+</div>
+<ul class="people-list">
+  {% for p in people | sort(false, false, 'name') %}
+  <li>
+    <a href="{{ p.url }}">{{ p.name }}</a>{% if p.aka %} <span class="people-aka">aka {{ p.aka }}</span>{% endif %}{% if p.links %}{% for l in p.links %}
+    (<a href="{{ l.url }}">{{ l.label }}</a>){% endfor %}{% endif %}
+  </li>
+  {% endfor %}
+</ul>

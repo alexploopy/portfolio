@@ -1,0 +1,42 @@
+---
+layout: base.njk
+active: about
+title: Your Name
+permalink: /
+---
+{#
+  ───────────────────────────────────────────────────────────────────────────
+  The About (home) page is hand-written HTML inside .prose below. The heading
+  and the social links are pulled from content/_data/site.js (site.name and
+  site.social) — edit those there, and edit the paragraphs here.
+
+  Supported prose features (it never renders as a comment):
+    • Multiple <p> paragraphs (justified prose).
+    • Inline links: <a href="https://example.com">link text</a> (underlined
+      redirect style).
+
+  Example body:
+      <div class="prose">
+        <p>First paragraph of your introduction.</p>
+        <p>A second paragraph with an inline
+           <a href="https://example.com">link</a>.</p>
+      </div>
+  ───────────────────────────────────────────────────────────────────────────
+#}
+<h1 class="page-title"><img class="title-logo" src="/img/logo-placeholder.svg" alt="" />{{ site.name }}</h1>
+<div class="prose">
+  <p>
+    Hi, I'm Your Name — a one-line introduction to who you are and what you do. Replace this with a short paragraph about yourself, your work, and your interests. You can drop <a href="https://example.com">inline links</a> in anywhere.
+  </p>
+  <p>
+    A second paragraph for anything else: hobbies, where you're based, or what you're working on now. Edit these paragraphs in <strong>content/about.njk</strong>; your name, logo, and social links come from <strong>content/_data/site.js</strong>.
+  </p>
+  <p>
+    This site is built with Alex's Portfolio Template, created by <a href="https://github.com/alexploopy/portfolio">Alex Tan</a> (<a href="https://x.com/alexploopy">X</a>). The design is heavily inspired by <a href="https://joshbradley.me/">Josh Bradley</a>.
+  </p>
+</div>
+<hr class="rule" />
+<p class="social">
+  {% for s in site.social %}<a href="{{ s.url }}">{{ s.label }}</a
+  >&nbsp;&nbsp;&nbsp;{% endfor %}<span class="email" data-email="you[dot]name[at]example[dot]com">Email</span>
+</p>
